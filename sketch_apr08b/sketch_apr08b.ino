@@ -1,22 +1,28 @@
-/* Use a photoresistor (or photocell) to turn on an LED in the dark
-   More info and circuit schematic: http://www.ardumotive.com/how-to-use-a-photoresistor-en.html
-   Dev: Michalis Vasilakis // Date: 8/6/2015 // www.ardumotive.com */
-   
+#include <Servo.h>
 
-//Constants
-const int pResistor = A0; // Photoresistor at Arduino analog pin A0
+Servo myservo;
+int obs;
 
-//Variables
-int value;          // Store value from photoresistor (0-1023)
-
-void setup(){
- Serial.begin(9600);
- pinMode(pResistor, INPUT);// Set pResistor - A0 pin as an input (optional)
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+  pinMode(A0, INPUT);
+  digitalWrite(A0, LOW);
+  myservo.attach(9);
+  myservo.write(0);
 }
 
-void loop(){
-  value = analogRead(pResistor);
-  Serial.println(value);
- 
+void loop() {
+  // put your main code here, to run repeatedly:
+  obs =  analogRead(A0);
+  Serial.println(obs);
+  if(obs > 8){
+    myservo.write(40);
+    delay(3); 
+  }
+  else{
+    myservo.write(0);
+  }
   
+
 }
